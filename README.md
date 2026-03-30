@@ -1,8 +1,8 @@
 # PCA post-stroke mood predictive model
 ## Preuse information
-Everything is relatively easy to modify. This was designed on Linux; the appropriate file and folder names will have to be set - you can press Ctrl + C on a file/folder in Windows and paste it inside the code to get the destination name.
-To make the pipeline using your own images, a computer with good processing power is required: for 300 patients, a 16-core CPU would be recommended. If not, I would recommend starting off with 150 images.
-Required Python libraries: pickle, numpy, pandas, scipy, nibabel, sklearn
+1. Everything is relatively easy to modify. This was designed on Linux; the appropriate file and folder names will have to be set - you can press Ctrl + C on a file/folder in Windows and paste it inside the code to get the destination name.
+2. To make the pipeline using your own images, a computer with good processing power is required: for 300 patients, a 16-core CPU would be recommended. If not, I would recommend starting off with 150 images.
+3. The required Python libraries are pickle, numpy, pandas, scipy, nibabel, sklearn
 
 ## preprocessing.py
 The images must be skull-stripped and spatially normalized to match the MNI 1 mm resolution 182 x 218 x 182. This file uses the deep-learning tool HD-BET, which is run on Bash or Command Prompt, and the DWI_MNI_1 mm file in the repository. The instructions for installing it are [here](https://github.com/MIC-DKFZ/HD-BET).
