@@ -1,7 +1,7 @@
 # PCA post-stroke mood predictive model
 ## Preuse information
 * Everything is relatively easy to modify. This was designed on Linux; the appropriate file and folder names will have to be set - you can press Ctrl + C on a file/folder in Windows and paste it inside the code to get the destination name.
-* To make the pipeline using your own images, a computer with good processing power is required: for 300 patients, a 16-core CPU would be recommended. If not, I would recommend starting off with 150 images.
+* To make the pipeline using your own images, a computer with good processing power is required: for 300 patients, a 16-core CPU would be recommended. If not available, I would recommend starting off with 150 images.
 * The required Python libraries are pickle, numpy, pandas, scipy, nibabel, sklearn
 
 ## preprocessing.py
