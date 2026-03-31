@@ -2,7 +2,9 @@
 ## Before you use
 * Everything is relatively easy to modify. This was designed on Linux; the appropriate file and folder names will have to be set - you can press Ctrl + C on a file/folder in Windows and paste it inside the code to get the destination name.
 * If your only objective is to view the brain components associated with the mood evaluations in your cohort, you just need to run _preprocessing.py_, _identify_components.py_, and _component_plot.py_. 
-* To design a predictive model based on your cohort, a computer with good processing power is required: for 300 patients, a 16-core CPU would be recommended. If not available, I would recommend starting off with 150-200 images and see if _identify_components.py_ can run.
+* To design a predictive model based on your cohort, I believe that ADC images would be best. If not, FLAIR would be plan B or mean DWI images as plan C, both of which would require _shift_intensities.py_.
+* The whole process 
+* A computer with good processing power and RAM is required: a set of 250 patients needed at least 16 GB ram and 12-core CPU. This is completely due to the function performing the principal component analysis. I will do my best to find a less demanding version to update the script here. For now, I would recommend starting off with 150 images and seeing if _identify_components.py_ can run. It takes roughly 5 minutes to run it and would crash before that if there's insufficient RAM.
 * The required Python libraries are pickle, numpy, pandas, scipy, nibabel, sklearn
 
 ## preprocessing.py
