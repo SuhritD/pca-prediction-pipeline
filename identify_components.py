@@ -14,10 +14,12 @@ DWI=sorted(os.listdir(folder))
 
 list_images=[x.replace('_DWI.nii.gz','') for x in DWI]
 scores=pd.read_excel([EXCEL SHEET WITH PATIENT SCORES])
+zeropositions=pickle.load((open('zeropositions','rb')))                  #This will discard all the zero values in the MRI images to speed up the PCA.
 data_all=[]
 for i in DWI:
     img_data=nib.load(folder+i).get_fdata()
-    data_all.append(np.ndarray.flatten(img_data))
+    data_all.append(np.delete(img_data.ravel(),zeropositions)) 		    #If you want to use the complete images with the zero values, put a hashtag at the start of this line and remove the one below
+    #data_all.append(img_data.ravel())
 data_all=np.array(data_all)
 pca= PCA(n_components=100,svd_solver='full')
 transformed_pca = pca.fit_transform(data_all)
