@@ -14,7 +14,7 @@ DWI=sorted(os.listdir(folder))
 
 list_images=[x.replace('_DWI.nii.gz','') for x in DWI]
 scores=pd.read_excel([EXCEL SHEET WITH PATIENT SCORES])
-zeropositions=pickle.load((open('zeropositions','rb')))                  #This will discard all the zero values in the MRI images to speed up the PCA.
+zeropositions=pickle.load((open('zeropositions','rb'))).ravel()                  #This array will discard the non-brain voxels to speed up the PCA
 data_all=[]
 for i in DWI:
     img_data=nib.load(folder+i).get_fdata()
