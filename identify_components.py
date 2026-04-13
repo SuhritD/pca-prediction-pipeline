@@ -23,10 +23,7 @@ for i in DWI:
 data_all=np.array(data_all)
 pca= PCA(n_components=100,svd_solver='full')
 transformed_pca = pca.fit_transform(data_all)
-with open('PCA','wb') as fp:
-    pickle.dump(pca,fp)
-with open('transformed_pca','wb') as fp:
-    pickle.dump(transformed_pca,fp)
+
 
 #Taking significant components
 significant_components={}
@@ -45,16 +42,27 @@ for column in range(1,3): #This will select the 2nd and 3rd columns in your spre
     data=np.delete(transformed_pca,indice_to_remove,axis=0)
     sig=[]
     for i in range(len(pca.components_)):
-        if abs(scipy.stats.spearmanr(sub_test[scores.columns[column]].values,data[:,i]).correlation)>0.2:
+        if scipy.stats.spearmanr(sub_test[scores.columns[column]].values,data[:,i]).correlation>0.2:
+            print("Component "+str(i)+" is positively correlated")
             sig.append(i)
+        if scipy.stats.spearmanr(sub_test[scores.columns[column]].values,data[:,i]).correlation<-0.2:
+            print("Component "+str(i)+" is negatively correlated")
+            sig.append(i)       
     if sig==[]:
-        print("NO CORRELATIONS")
+        print("No significant correlations found")
     significant_components[scores.columns[column]]=sig
    
-
-#SAVE THE FILE WITH SIGNIFICANT BRAIN COMPONENTS
+#SAVE THE FILES FOR OTHER STEPS
 with open('significant_components','wb') as fp:
     pickle.dump(significant_components,fp)
-    
-    
-                                
+with open('transformed_pca','wb') as fp:
+    pickle.dump(transformed_pca,fp)
+
+"""
+LARGE FILES
+
+with open('PCA','wb') as fp:
+    pickle.dump(pca,fp)
+with open('data_all','wb') as fp:
+    pickle.dump(significant_components,fp)
+""" 
