@@ -38,18 +38,16 @@ I will do my best to improve the codes for efficiency and performance. However, 
 \-\> The output(s) will be NIFTI image(s) to show the brain patterns of the overall dataset used. The Spearman correlation values have been shifted to make the image have all values above 0\. I use [ITK-SNAP](https://www.itksnap.org/) to view the images:
 
 <img width="2048" height="1139" alt="image" src="https://github.com/user-attachments/assets/c64bad28-20dd-4a33-abbe-71aff5ac2945" />
+(quick reminder: most tools will have inverted left-right orientation)
 
 
-This is the 4th component from the DWI images of a cohort that was negatively correlated with depression scores and the color map changed to **Jet** instead of **Grayscale**. red regions have values closer to 1 and blue regions are closer to \-1. For DWI images, this would mean that lesions in blue regions such as the frontal lobe cause higher depression scores and vice-versa (quick reminder: most tools will have inverted left-right orientation). If this was done using ADC images, where lesion voxels are darker than the rest of the brain, the colors would have the opposite meaning.
+This is the 4th component from the DWI images of a cohort that was negatively correlated with depression scores and the color map changed to **Jet** instead of **Grayscale**. red regions have values closer to 1 and blue regions are closer to \-1. For DWI images, this would mean that lesions in blue regions such as the frontal lobe cause higher depression scores and vice-versa . If this was done using ADC images, where lesion voxels are darker than the rest of the brain, the colors would have the opposite meaning.
 
-\-\> Importantly, not all component plots will be informative: PCA will isolate the large patterns within the first 10 or 15 components. Here’s the 60th component from a sample that was significantly negatively correlated with CESD scores:
+\-\> Importantly, not all component plots will be informative: PCA will isolate the large patterns within the first 10 or 15 components. Here’s the 80th component from the same cohort, also significantly negatively correlated with CESD scores:
 
-<img width="769" height="701" alt="image" src="https://github.com/user-attachments/assets/802e486e-0958-4924-9492-d9543f76d092" />
+<img width="1835" height="1298" alt="image" src="https://github.com/user-attachments/assets/200229af-9268-4467-8958-88d956b21b31" />
 
-
-Components like this can be significant but not really useful visually, although you can see that the same red region near the posterior right hemisphere as well as a large blue cluster near the cingulate, a region known to be associated with depression.
-
-In conclusion, keep in mind that these are purely visual representations of the data being used \- nothing more, nothing less. ITK and other tools can also make 3D plots, which could be interesting to explore.
+Visually, this is not very informative. There may be ways of utilizing this image such as through graph theory, but I would be cautious of reading too much into it. In short, keep in mind that these components are purely a visual representation of patterns in the provided data \- nothing more, nothing less. ITK and other tools can also make 3D plots, which could be interesting to explore if you threshold certain brain portions.
 
 ## **testing\_phase.py**
 
