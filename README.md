@@ -9,9 +9,9 @@
 * It is fairly easy to modify the scripts to set all the file and folder names. In case you are using a Python interface where you can’t drag the file to get its complete destination, here’s a pro-tip: press Ctrl \+ C on the item and paste it inside the text of the code, it’ll give the destination name.
 * If your only objective is to view the brain components associated with the mood evaluations in your cohort, you just need to run *preprocessing.py*, *identify\_components.py*, and *component\_plot.py*.  
 * To design a predictive model based on your cohort, I believe that ADC images would be best. If not, FLAIR would be plan B or mean DWI images as plan C \- and either case would require *shift\_intensities.py*.  
-* The only intense code is to compute the principal component analysis over the complete voxels of MRI images. A computer with good processing power and RAM is required: a set of 250 patients needed at least 12 GB RAM and an 8-core CPU.  
+* The only resource-demanding aspect is computing the principal component analysis over the complete voxels of MRI images. A computer with good processing power and RAM is required: a set of 250 patients needed at least 12 GB RAM and an 8-core CPU.  
   Important factors:  
-  (i) Around 74% of the voxels in an MRI image are outside the brain, so the current code discards them before the PCA. This saves a lot of computational time, but I’ve found in several cases that the results are different using PCA on the whole image  \- the calculations over a sparse dataset isn’t the same as a denser one. Although it should be possible to tweak the non-zero version to get the best results, it's not what I originally used.
+  (i) Around 74% of the voxels in an MRI image are outside the brain, so the current code discards them before the PCA. This saves a lot of computational time, but I’ve found in several cases that the results are different using PCA on the whole image  \- the calculations over a sparse dataset isn’t the same as a denser one, so maybe the first 10 components would be identical but the final 10 could differ a bit. Although it should be possible to tweak the non-zero version to get the best results, it's not what I originally used.
   (ii) The PCA function uses full SVD, which is supposed to give the same compressed data every time. It is quicker to use other forms of compression such as sparse PCA, incrementalPCA and TruncatedSVD that you can examine [here](https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html). However, all of these techniques will give different results, and I’ve always found the best results from full SVD.
 
 I will do my best to improve the codes for efficiency and performance. However, of course, everything is available for you to modify and explore.
@@ -49,6 +49,14 @@ This is the 4th component from the DWI images of a cohort that was negatively co
 <img width="1835" height="1298" alt="image" src="https://github.com/user-attachments/assets/200229af-9268-4467-8958-88d956b21b31" />
 
 Visually, this is not very informative. There may be ways of utilizing this image such as through graph theory, but I would be cautious of reading too much into it. In short, keep in mind that these components are purely a visual representation of patterns in the provided data \- nothing more, nothing less. ITK and other tools can also make 3D plots, which could be interesting to explore if you threshold out certain brain portions.
+
+## **knn\_regression.py**
+
+This is the step to predict the clinical scores based on KNN regression, taking the *transformed\_pca.* and *significant\_components.* files from before. 
+
+\-\> If you found a lot of significant components for an evaluation, it probably isn't a good idea to make a model with all of them. The simplest way to cut down on it is discard the components with low significance. The current code will do this if there are more than 4 components by discarding the ones with correlations above p=0.01. Alternatively, you could edit the correlation threshold in lines 45 and 48 of **identify\_components.py** to have fewer components in the first place - the fewer images you use, the more components would be significantly correlated. I also tried backward regression, but the current code seemed to give the best predictions.
+
+\-\> KNN regression is a straightforward nonparametric regression. The only concept is the value of k, which is how tightly the regression is supposed to take each variable. For the minimum value of k=2, this would be like taking a large number of independent variables in a linear model - strong R^2, but not generalizable. A k=40 would be a pretty broad regression, which would be almost like a simple linear regression. Change as required. 
 
 ## **testing\_phase.py**
 
