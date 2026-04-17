@@ -9,11 +9,11 @@ import pickle, numpy as np, pandas as pd, scipy.stats, nibabel as nib, os
 from sklearn.decomposition import PCA
 
 
-input_folder=[FOLDER WITH INPUT FILES]
+input_folder=''                                                                  #Folder with preprocessed patient images
 DWI=sorted(os.listdir(folder))
 
 list_images=[x.replace('_DWI.nii.gz','') for x in DWI]
-scores=pd.read_excel([EXCEL SHEET WITH PATIENT SCORES])
+scores=pd.read_excel('')                                                         #Spreadsheet with scores
 zeropositions=pickle.load((open('zeropositions','rb'))).ravel()                  #This array will discard the non-brain voxels to speed up the PCA
 data_all=[]
 for i in DWI:
@@ -59,7 +59,7 @@ with open('transformed_pca','wb') as fp:
     pickle.dump(transformed_pca,fp)
 
 """
-LARGE FILES
+#These are large files that should be saved if running other scripts later
 
 with open('PCA','wb') as fp:
     pickle.dump(pca,fp)
