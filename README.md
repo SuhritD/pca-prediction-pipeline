@@ -32,9 +32,9 @@ I will do my best to improve the codes for efficiency and performance. However, 
 
 ## **component\_plot.py**
 
-\-\> Along with the template MNI image, the outputs from the previous code are required \- the MRI data after removing null voxels (*data\_all*), the transformed PCA matrix (*transformed\_pca*), and the significant components (*significant\_components*).
+\-\> The objective is to visualize the relevant PCA components as an MRI image. The quick and dirty way of doing this is by directly taking the PCA loadings from the file *pca* in a 3D matrix, which is the first section in inverted commas. This is great if using ADC maps because the PCA components are essentially the same as the DTI metric of “Mean Diffusivity” and you can compare results from the literature. But if using mean DWI or FLAIR, the appropriate method is to create the image based on a Spearman correlation between *data\_all* and the desired column from *transformed\_pca* at each voxel. This could take between 5-15 minutes for each image, depending on the sample size. If pressed for time, you could run the first section since the global pattern is probably 70% the same.
 
-\-\>The component plot is based on Spearman correlations between *data\_all* and *transformed\_pca.* This could take between 5-10 minutes for each component to generate. If you want don't want to look at all components found, change the line 13 to a list, such as: *comps=\[21,69\]* 
+\-\> Along with the template MNI image, the outputs from the previous code are required \- the MRI data after removing null voxels (*data\_all*), the transformed PCA matrix (*transformed\_pca*), and the significant components (*significant\_components*).
 
 \-\> The output(s) will be NIFTI image(s) to show the brain patterns of the overall dataset used. The Spearman correlation values have been shifted to make the image have all values above 0\. I use [ITK-SNAP](https://www.itksnap.org/) to view the images:
 
@@ -42,7 +42,7 @@ I will do my best to improve the codes for efficiency and performance. However, 
 (quick reminder: most softwares will have an inverted left-right orientation)
 
 
-This is the 4th component from the DWI images of a cohort that was negatively correlated with depression scores and the color map changed to **Jet** instead of **Grayscale**. red regions have values closer to 1 and blue regions are closer to \-1. For DWI images, this would mean that lesions in blue regions such as the frontal lobe cause higher depression scores and vice-versa . If this was done using ADC images, where lesion voxels are darker than the rest of the brain, the colors would have the opposite meaning.
+This is the 4th component from the DWI images of a cohort that was negatively correlated with depression scores and the color map changed to **Jet** instead of **Grayscale**. red regions have values closer to 1 and blue regions are closer to \-1. For DWI images, this would mean that lesions in blue regions such as the frontal lobe cause higher depression scores and vice-versa . If this was done using ADC images, where lesion voxels are darker than the rest of the brain, the colors would have the opposite meaning \- but keep in mind that the actual numbers of the image should not be used in comparative analysis.
 
 \-\> Importantly, not all component plots will be informative: PCA will isolate the large patterns within the first 10 or 15 components. Here’s the 80th component from the same cohort, also significantly negatively correlated with CESD scores:
 
