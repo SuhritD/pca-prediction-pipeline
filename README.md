@@ -18,8 +18,9 @@ I will do my best to improve the codes for efficiency and performance. However, 
 
 ## **preprocessing.py**
 
-* You don't have to use this code if you have preprocessed images \- the only thing that matters is **ALL** the images you use have undergone the exact same treatment, especially if you have a validation cohort. This pipeline can only work based on patterns, so anything not uniform cannot be generalized. 
-* This code conducts skull-stripping and spatial normalization to produce images with the MNI 1 mm resolution 182 x 218 x 182\. This will be done on Python using the deep-learning tool HD-BET and the DWI\_MNI\_1 mm file in the repository. The instructions for installing the tool are [here](https://github.com/MIC-DKFZ/HD-BET).  
+* This code conducts skull-stripping and spatial normalization to produce images with the MNI 1 mm resolution 182 x 218 x 182\. This will be done on Python using the deep-learning tool HD-BET and the DWI (DWI\_MNI\_1mm.nii.gz) or FLAIR (GG-853-FLAIR-1.0mm.nii.gz) template in the repository. The instructions for installing the tool are [here](https://github.com/MIC-DKFZ/HD-BET).  
+* If using ADC images, the recommended guidelines are to register the patient’s b0 image with the DWI template and then apply the parameters to the ADC image. While most people should have ADC images as well as the separate b-value diffusion images, it may be possible that you only have the mean DWI files. If so, you will have to be careful about how accurately the ADC maps are registered.  
+* You don't have to use this code if you have preprocessed images, but the only thing that matters is **ALL** the images you use have undergone the exact same treatment, especially if you have a separate cohort for validation.
 * Two optional edits mentioned in inverted commas:  
   1. ANTs creates a lot of temporary files, about 150 MB space per subject. This program clears the images in the Linux temporary folder /tmp/ after each loop, which would have to be changed to the Windows one.  
   2. DWI images from older MRI machines may have unusually high intensity levels \- over 1750 or so \- which would need to be smoothened. The smoothened function is at the end.
